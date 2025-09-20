@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34616.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "MovieDiscussion", "MovieDiscussion\MovieDiscussion.ccproj", "{FCE7A370-46C3-4651-9E92-BD4A2FD7381B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "NotificationService\NotificationService.csproj", "{D9805EB7-A27D-412F-B9C9-F94A3BA5AA39}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCE7A370-46C3-4651-9E92-BD4A2FD7381B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCE7A370-46C3-4651-9E92-BD4A2FD7381B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCE7A370-46C3-4651-9E92-BD4A2FD7381B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCE7A370-46C3-4651-9E92-BD4A2FD7381B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9805EB7-A27D-412F-B9C9-F94A3BA5AA39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9805EB7-A27D-412F-B9C9-F94A3BA5AA39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9805EB7-A27D-412F-B9C9-F94A3BA5AA39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9805EB7-A27D-412F-B9C9-F94A3BA5AA39}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7F415946-E098-483A-AFD4-60BB37256A95}
+	EndGlobalSection
+EndGlobal
