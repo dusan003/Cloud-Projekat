@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>2.9</ProductVersion>
-    <ProjectGuid>fce7a370-46c3-4651-9e92-bd4a2fd7381b</ProjectGuid>
+    <ProjectGuid>f3c18c32-d25f-4474-92bb-de7ae2bcdbc4</ProjectGuid>
     <OutputType>Library</OutputType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -14,6 +14,7 @@
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
     <ARMDeployment>True</ARMDeployment>
     <Name>MovieDiscussion</Name>
+    <UseWebProjectPorts>False</UseWebProjectPorts>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,9 +40,17 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MovieDiscussionService\MovieDiscussionService.csproj">
+      <Name>MovieDiscussionService</Name>
+      <Project>{347c3626-20e0-404f-af36-f8ad1d82e885}</Project>
+      <Private>True</Private>
+      <RoleType>Web</RoleType>
+      <RoleName>MovieDiscussionService</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\NotificationService\NotificationService.csproj">
       <Name>NotificationService</Name>
-      <Project>{d9805eb7-a27d-412f-b9c9-f94a3ba5aa39}</Project>
+      <Project>{20091742-bd31-4363-b806-77fee6409984}</Project>
       <Private>True</Private>
       <RoleType>Worker</RoleType>
       <RoleName>NotificationService</RoleName>
@@ -49,9 +58,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="MovieDiscussionServiceContent\" />
     <Folder Include="NotificationServiceContent\" />
   </ItemGroup>
   <ItemGroup>
+    <DiagnosticsConfiguration Include="MovieDiscussionServiceContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="NotificationServiceContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
