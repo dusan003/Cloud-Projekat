@@ -1,30 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ServiceDefinition name="MovieDiscussion" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
-  <WorkerRole name="NotificationService" vmsize="Standard_D1_v2">
-    <Endpoints>
-      <InputEndpoint name="Health" protocol="http" port="8082" />
-    </Endpoints>
-    <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-      <Setting name="StorageConnectionString" />
-      <Setting name="NotificationsQueueName" />
-      <Setting name="SendGridApiKey" />
-    </ConfigurationSettings>
-  </WorkerRole>
-  <WebRole name="MovieDiscussionService" vmsize="Standard_D1_v2">
-    <Sites>
-      <Site name="Web">
-        <Bindings>
-          <Binding name="Endpoint1" endpointName="Endpoint1" />
-        </Bindings>
-      </Site>
-    </Sites>
-    <ConfigurationSettings>
-      <Setting name="DataConnectionString" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-    </ConfigurationSettings>
-    <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="8081" />
-    </Endpoints>
-  </WebRole>
+<ServiceDefinition name="MovieDiscussion"
+                   xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition"
+                   schemaVersion="2015-04.2.6">
+
+	<!-- Worker role for notifications -->
+	<WorkerRole name="NotificationService" vmsize="Standard_D1_v2">
+		<Endpoints>
+			<InputEndpoint name="Health" protocol="http" port="8082" />
+		</Endpoints>
+		<ConfigurationSettings>
+			<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+			<Setting name="StorageConnectionString" />
+			<Setting name="NotificationsQueueName" />
+			<Setting name="SendGridApiKey" />
+		</ConfigurationSettings>
+	</WorkerRole>
+
+	<!-- Web role for Movie Discussion API -->
+	<WebRole name="MovieDiscussionService" vmsize="Standard_D1_v2">
+		<Sites>
+			<Site name="Web">
+				<Bindings>
+					<Binding name="Endpoint1" endpointName="Endpoint1" />
+				</Bindings>
+			</Site>
+		</Sites>
+		<Endpoints>
+			<InputEndpoint name="Endpoint1" protocol="http" port="8081" />
+		</Endpoints>
+		<ConfigurationSettings>
+			<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+			<Setting name="DataConnectionString" />
+		</ConfigurationSettings>
+	</WebRole>
 </ServiceDefinition>
