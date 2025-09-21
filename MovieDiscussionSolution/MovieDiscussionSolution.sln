@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "MovieDiscussion", "MovieDiscussion\MovieDiscussion.ccproj", "{F3C18C32-D25F-4474-92BB-DE7AE2BCDBC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "NotificationService\NotificationService.csproj", "{20091742-BD31-4363-B806-77FEE6409984}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "NotificationService\NotificationService.csproj", "{A1842DB0-F265-4F4C-90BA-439BD8C709AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieDiscussionService", "MovieDiscussionService\MovieDiscussionService.csproj", "{347C3626-20E0-404F-AF36-F8AD1D82E885}"
 EndProject
@@ -19,10 +19,10 @@ Global
 		{F3C18C32-D25F-4474-92BB-DE7AE2BCDBC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3C18C32-D25F-4474-92BB-DE7AE2BCDBC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3C18C32-D25F-4474-92BB-DE7AE2BCDBC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20091742-BD31-4363-B806-77FEE6409984}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20091742-BD31-4363-B806-77FEE6409984}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20091742-BD31-4363-B806-77FEE6409984}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20091742-BD31-4363-B806-77FEE6409984}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1842DB0-F265-4F4C-90BA-439BD8C709AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1842DB0-F265-4F4C-90BA-439BD8C709AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1842DB0-F265-4F4C-90BA-439BD8C709AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1842DB0-F265-4F4C-90BA-439BD8C709AE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{347C3626-20E0-404F-AF36-F8AD1D82E885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{347C3626-20E0-404F-AF36-F8AD1D82E885}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{347C3626-20E0-404F-AF36-F8AD1D82E885}.Release|Any CPU.ActiveCfg = Release|Any CPU
