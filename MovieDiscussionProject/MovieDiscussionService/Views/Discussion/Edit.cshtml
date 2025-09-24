@@ -3,54 +3,90 @@
     ViewBag.Title = "Edit Discussion";
 }
 
-<h2>Edit Discussion</h2>
+<div class="d-flex align-items-center justify-content-center min-vh-100 py-5"
+     style="background: linear-gradient(135deg,#7209b7,#4361ee,#4cc9f0);">
 
-@using (Html.BeginForm("Edit", "Discussion", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form" }))
-{
-    <div class="form-group">
-        @Html.LabelFor(m => m.MovieTitle)
-        @Html.TextBoxFor(m => m.MovieTitle, new { @class = "form-control" })
-    </div>
+    <!-- Card -->
+    <div class="card border-0 shadow-lg rounded-4 p-5"
+         style="width: 700px; background: #e3f2fd;">
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Year)
-        @Html.TextBoxFor(m => m.Year, new { @class = "form-control" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Genre)
-        @Html.TextBoxFor(m => m.Genre, new { @class = "form-control" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.ImdbRating)
-        @Html.TextBoxFor(m => m.ImdbRating, new { @class = "form-control" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Synopsis)
-        @Html.TextAreaFor(m => m.Synopsis, new { @class = "form-control" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.DurationMin)
-        @Html.TextBoxFor(m => m.DurationMin, new { @class = "form-control" })
-    </div>
-
-    <!-- Slika -->
-    <div class="form-group">
-        @Html.Label("Poster Image")
-        <input type="file" name="PosterFile" class="form-control" accept="image/*" />
-        @if (!string.IsNullOrEmpty(Model.PosterUrl))
-        {
-            <div style="margin-top:10px;">
-                <p>Current Image:</p>
-                <img src="@Model.PosterUrl" style="max-height: 200px;" />
+        <!-- Header -->
+        <div class="text-center mb-4 text-dark">
+            <div class="mb-3">
+                <i class="bi bi-pencil-square" style="font-size: 3rem;"></i>
             </div>
+            <h2 class="fw-bold">Edit Discussion</h2>
+            <p class="opacity-75">Update your movie discussion details 🎬</p>
+        </div>
+
+        @using (Html.BeginForm("Edit", "Discussion", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation", novalidate = "novalidate" }))
+        {
+            <div class="row g-4 text-dark">
+
+                <!-- Movie Title -->
+                <div class="col-md-12">
+                    <label class="form-label fw-semibold">Movie Title</label>
+                    @Html.TextBoxFor(m => m.MovieTitle, new { @class = "form-control", placeholder = "Enter movie title" })
+                    @Html.ValidationMessageFor(m => m.MovieTitle, "", new { @class = "text-danger small" })
+                </div>
+
+                <!-- Year -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Year</label>
+                    @Html.TextBoxFor(m => m.Year, new { @class = "form-control", placeholder = "Enter release year" })
+                    @Html.ValidationMessageFor(m => m.Year, "", new { @class = "text-danger small" })
+                </div>
+
+                <!-- Genre -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Genre</label>
+                    @Html.TextBoxFor(m => m.Genre, new { @class = "form-control", placeholder = "Enter genre" })
+                    @Html.ValidationMessageFor(m => m.Genre, "", new { @class = "text-danger small" })
+                </div>
+
+                <!-- IMDB Rating -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">IMDB Rating</label>
+                    @Html.TextBoxFor(m => m.ImdbRating, new { @class = "form-control", placeholder = "Enter IMDB rating" })
+                    @Html.ValidationMessageFor(m => m.ImdbRating, "", new { @class = "text-danger small" })
+                </div>
+
+                <!-- Duration -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Duration (min)</label>
+                    @Html.TextBoxFor(m => m.DurationMin, new { @class = "form-control", placeholder = "Enter duration in minutes" })
+                    @Html.ValidationMessageFor(m => m.DurationMin, "", new { @class = "text-danger small" })
+                </div>
+
+                <!-- Synopsis -->
+                <div class="col-md-12">
+                    <label class="form-label fw-semibold">Synopsis</label>
+                    @Html.TextAreaFor(m => m.Synopsis, new { @class = "form-control", placeholder = "Enter short synopsis", rows = 4 })
+                    @Html.ValidationMessageFor(m => m.Synopsis, "", new { @class = "text-danger small" })
+                </div>
+
+                <!-- Poster -->
+                <div class="col-md-12">
+                    <label class="form-label fw-semibold">Poster Image</label>
+                    <input type="file" name="PosterFile" class="form-control" accept="image/*" />
+                    <small class="text-muted">JPEG, PNG, GIF, WEBP</small>
+
+                    @if (!string.IsNullOrEmpty(Model.PosterUrl))
+                    {
+                        <div class="mt-3 text-center">
+                            <p class="fw-semibold">Current Poster:</p>
+                            <img src="@Model.PosterUrl" alt="Poster preview"
+                                 class="rounded shadow-sm border"
+                                 style="max-height: 200px;" />
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary w-100 py-2 mt-4 rounded-pill fw-bold shadow-sm">
+                <i class="bi bi-check-circle me-2"></i> Save Changes
+            </button>
         }
     </div>
-
-    <br />
-
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-}
+</div>

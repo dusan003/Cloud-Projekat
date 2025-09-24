@@ -1,166 +1,159 @@
-﻿@model IEnumerable<Common.DiscussionEntity>
+﻿@model IEnumerable<Common.Models.DiscussionEntity>
 @{
     ViewBag.Title = "Discussions";
     var currentUserEmail = Session["email"]?.ToString()?.ToLowerInvariant();
 }
 
-<h2>Discussions</h2>
+<div class="d-flex flex-column align-items-center min-vh-100 py-5"
+     style="background: linear-gradient(135deg,#7209b7,#4361ee,#4cc9f0);">
 
-<!-- Pretraga i filtriranje -->
-<!-- Pretraga i filtriranje -->
-@using (Html.BeginForm("Index", "Discussion", FormMethod.Get, new { id = "searchForm" }))
-{
-    <div>
-        <label for="TitleContains">Movie Title:</label>
-        <input type="text" name="TitleContains" value="@Request["TitleContains"]" id="TitleContains" />
-
-        <label for="GenreEquals">Genre:</label>
-        <input type="text" name="GenreEquals" value="@Request["GenreEquals"]" id="GenreEquals" />
-
-        <button type="submit" onclick="clearInputs()">Search</button>
-
-
-        <label for="SortBy">Sort by:</label>
-        <select name="SortBy" id="sortBy">
-            <option value="None" @(Request["SortBy"] == "None" ? "selected" : "")>None</option>
-            <option value="ScoreDesc" @(Request["SortBy"] == "ScoreDesc" ? "selected" : "")>Best Score</option>
-            <option value="ScoreAsc" @(Request["SortBy"] == "ScoreAsc" ? "selected" : "")>Worst Score</option>
-        </select>
+    <!-- Header -->
+    <div class="text-center text-white mb-4">
+        <h2 class="fw-bold"><i class="bi bi-chat-dots"></i> Discussions</h2>
+        <p class="opacity-75">Browse and join conversations about movies 🎬</p>
     </div>
-}
 
-@section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            // Kada korisnik promeni vrednost u dropdownu
-            $('#sortBy').on('change', function () {
-                $('#searchForm').submit();
-            });
-        });
-    </script>
-}
-
-<p>
-    @Html.ActionLink("Create new discussion", "Create", "Discussion")
-</p>
-
-<div class="story-container">
-    @foreach (var d in ViewBag.Discussions)
-    {
-        <div class="story-card">
-            <img src="@d.PosterUrl" alt="Poster for @d.MovieTitle" class="poster-img" />
-            <div class="story-content">
-                <h3>@d.MovieTitle (@d.Year)</h3>
-                <p><strong>Genre:</strong> @d.Genre</p>
-                <p><strong>IMDB:</strong> @d.ImdbRating</p>
-                <p><strong>Duration:</strong> @d.DurationMin min</p>
-                <p><strong>Synopsis:</strong> @d.Synopsis</p>
-                <p><strong>Reactions:</strong> 👍 @d.Positive / 👎 @d.Negative</p>
-                <p><strong>Created:</strong> @d.CreatedUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</p>
-                <p><strong>By:</strong> @d.CreatorEmail</p>
-
-                @if (d.CreatorEmail?.ToLowerInvariant() == currentUserEmail)
-                {
-                    <div class="story-actions">
-                        @Html.ActionLink("Edit", "Edit", "Discussion", new { id = d.RowKey }, new { @class = "btn btn-sm btn-primary" })
-                        @Html.Raw(" | ")
-                        @Html.ActionLink("Delete", "Delete", "Discussion", new { id = d.RowKey }, new { @class = "btn btn-sm btn-danger" })
-                    </div>
-                }
-
-                <div class="story-actions">
-                    <button class="btn btn-sm btn-secondary" onclick="window.location.href='@Url.Action("Details", "Discussion", new { id = d.RowKey })'">💬 Comment</button>
-                    <p><strong>Comments:</strong> @ViewBag.CommentCount[d.RowKey]</p>
+    <!-- Pretraga i filtriranje -->
+    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4" style="width: 90%; max-width: 1000px; background: #e3f2fd;">
+        @using (Html.BeginForm("Index", "Discussion", FormMethod.Get, new { id = "searchForm" }))
+        {
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label for="TitleContains" class="form-label fw-semibold">Movie Title</label>
+                    <input type="text" name="TitleContains" value="@Request["TitleContains"]" id="TitleContains" class="form-control" placeholder="Search by title" />
                 </div>
 
-                <!-- Ako trenutni korisnik nije kreator diskusije, prikazujemo dugmadi za glasanje -->
-                @if (!ViewBag.IsCreatorMap[d.RowKey])
-                {
+                <div class="col-md-3">
+                    <label for="GenreEquals" class="form-label fw-semibold">Genre</label>
+                    <input type="text" name="GenreEquals" value="@Request["GenreEquals"]" id="GenreEquals" class="form-control" placeholder="Genre" />
+                </div>
 
-                    <div class="reaction-buttons">
-                        <form method="post" action="@Url.Action("RateFilm", "Discussion", new { id = d.RowKey, isLike = true, Page = ViewBag.CurrentPage, PageSize = ViewBag.PageSize, TitleContains = Request["TitleContains"], GenreEquals = Request["GenreEquals"], SortBy = Request["SortBy"] })">
-                            <button type="submit" class="btn btn-sm btn-success">👍 @d.Positive</button>
-                        </form>
+                <div class="col-md-3">
+                    <label for="SortBy" class="form-label fw-semibold">Sort by</label>
+                    <select name="SortBy" id="sortBy" class="form-select">
+                        <option value="None" @(Request["SortBy"] == "None" ? "selected" : "")>None</option>
+                        <option value="ScoreDesc" @(Request["SortBy"] == "ScoreDesc" ? "selected" : "")>Best Score</option>
+                        <option value="ScoreAsc" @(Request["SortBy"] == "ScoreAsc" ? "selected" : "")>Worst Score</option>
+                    </select>
+                </div>
 
-                        <form method="post" action="@Url.Action("RateFilm", "Discussion", new { id = d.RowKey, isLike = false, Page = ViewBag.CurrentPage, PageSize = ViewBag.PageSize, TitleContains = Request["TitleContains"], GenreEquals = Request["GenreEquals"], SortBy = Request["SortBy"] })">
-                            <button type="submit" class="btn btn-sm btn-danger">👎 @d.Negative</button>
-                        </form>
-                        
+                <div class="col-md-2 text-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-search"></i> Search
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+
+    <p>
+        @Html.ActionLink("➕ Create new discussion", "Create", "Discussion", null, new { @class = "btn btn-success rounded-pill fw-bold shadow-sm" })
+    </p>
+
+    <!-- Diskusije -->
+    <div class="story-container">
+        @foreach (var d in ViewBag.Discussions)
+        {
+            <div class="story-card shadow-sm">
+                <img src="@d.PosterUrl" alt="Poster for @d.MovieTitle" class="poster-img" />
+                <div class="story-content">
+                    <h4 class="fw-bold">@d.MovieTitle (@d.Year)</h4>
+                    <p><strong>Genre:</strong> @d.Genre</p>
+                    <p><strong>IMDB:</strong> @d.ImdbRating</p>
+                    <p><strong>Duration:</strong> @d.DurationMin min</p>
+                    <p><strong>Synopsis:</strong> @d.Synopsis</p>
+                    <p><strong>Reactions:</strong> 👍 @d.Positive / 👎 @d.Negative</p>
+                    <p><strong>Created:</strong> @d.CreatedUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</p>
+                    <p><strong>By:</strong> @d.CreatorEmail</p>
+
+                    <!-- Akcije za kreatora -->
+                    @if (d.CreatorEmail?.ToLowerInvariant() == currentUserEmail)
+                    {
+                        <div class="story-actions">
+                            @Html.ActionLink("Edit", "Edit", "Discussion", new { id = d.RowKey }, new { @class = "btn btn-sm btn-primary rounded-pill" })
+                            @Html.ActionLink("Delete", "Delete", "Discussion", new { id = d.RowKey }, new { @class = "btn btn-sm btn-danger rounded-pill ms-2" })
+                        </div>
+                    }
+
+                    <!-- Dugme za komentare -->
+                    <div class="story-actions mt-2">
+                        <button class="btn btn-sm btn-secondary rounded-pill" onclick="window.location.href='@Url.Action("Details", "Discussion", new { id = d.RowKey })'">
+                            💬 Comments (@ViewBag.CommentCount[d.RowKey])
+                        </button>
                     </div>
 
-                }
-                else
-                {
-                    <p><strong>You created this discussion, voting is disabled for you.</strong></p>
-                }
-
-                <div class="story-actions">
-                    <!-- Prikaz broja pratilaca -->
-                    <p><strong>Followers:</strong> @ViewBag.FollowerCountMap[d.RowKey]</p>
-
-                    <!-- Prikaz statusa praćenja -->
-                    @if (ViewBag.IsFollowingMap[d.RowKey])
+                    <!-- Glasanje -->
+                    @if (!ViewBag.IsCreatorMap[d.RowKey])
                     {
-                        <form method="post" action="@Url.Action("Unfollow", "Discussion", new { id = d.RowKey, Page = ViewBag.CurrentPage, PageSize = ViewBag.PageSize, TitleContains = Request["TitleContains"], GenreEquals = Request["GenreEquals"], SortBy = Request["SortBy"] })">
-                            <button class="btn btn-sm btn-warning">Unfollow</button>
-                        </form>
+                        <div class="reaction-buttons mt-3">
+                            <form method="post" action="@Url.Action("RateFilm", "Discussion", new { id = d.RowKey, isLike = true })">
+                                <button type="submit" class="btn btn-sm btn-success rounded-pill shadow-sm">👍 @d.Positive</button>
+                            </form>
+                            <form method="post" action="@Url.Action("RateFilm", "Discussion", new { id = d.RowKey, isLike = false })">
+                                <button type="submit" class="btn btn-sm btn-danger rounded-pill shadow-sm">👎 @d.Negative</button>
+                            </form>
+                        </div>
                     }
                     else
                     {
-                        <form method="post" action="@Url.Action("Follow", "Discussion", new { id = d.RowKey, Page = ViewBag.CurrentPage, PageSize = ViewBag.PageSize, TitleContains = Request["TitleContains"], GenreEquals = Request["GenreEquals"], SortBy = Request["SortBy"] })">
-                            <button class="btn btn-sm btn-success">Follow</button>
-                        </form>
+                        <p class="text-muted small mt-2">You created this discussion, voting is disabled.</p>
                     }
 
+                    <!-- Follow -->
+                    <div class="story-actions mt-3">
+                        <p><strong>Followers:</strong> @ViewBag.FollowerCountMap[d.RowKey]</p>
+                        @if (ViewBag.IsFollowingMap[d.RowKey])
+                        {
+                            <form method="post" action="@Url.Action("Unfollow", "Discussion", new { id = d.RowKey })">
+                                <button class="btn btn-sm btn-warning rounded-pill shadow-sm">Unfollow</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form method="post" action="@Url.Action("Follow", "Discussion", new { id = d.RowKey })">
+                                <button class="btn btn-sm btn-success rounded-pill shadow-sm">Follow</button>
+                            </form>
+                        }
+                    </div>
                 </div>
-
             </div>
-        </div>
-    }
-</div>
-
-<!-- Navigacija za stranice -->
-<div>
-    @if (ViewBag.CurrentPage > 1)
-    {
-        <a href="?Page=1&PageSize=@ViewBag.PageSize&TitleContains=@Request["TitleContains"]&GenreEquals=@Request["GenreEquals"]&SortBy=@Request["SortBy"]">First</a>
-        <a href="?Page=@(ViewBag.CurrentPage - 1)&PageSize=@ViewBag.PageSize&TitleContains=@Request["TitleContains"]&GenreEquals=@Request["GenreEquals"]&SortBy=@Request["SortBy"]">Previous</a>
-    }
-
-    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
-    {
-        <a href="?Page=@(ViewBag.CurrentPage + 1)&PageSize=@ViewBag.PageSize&TitleContains=@Request["TitleContains"]&GenreEquals=@Request["GenreEquals"]&SortBy=@Request["SortBy"]">Next</a>
-        <a href="?Page=@ViewBag.TotalPages&PageSize=@ViewBag.PageSize&TitleContains=@Request["TitleContains"]&GenreEquals=@Request["GenreEquals"]&SortBy=@Request["SortBy"]">Last</a>
-    }
-
-    <p>Page @ViewBag.CurrentPage of @ViewBag.TotalPages</p>
-</div>
-
-<script>
-    function toggleCommentForm(id) {
-        const form = document.getElementById('comment-form-' + id);
-        if (form) {
-            form.style.display = form.style.display === 'none' ? 'block' : 'none';
         }
-    }
-</script>
+    </div>
+
+    <!-- Navigacija -->
+    <div class="mt-4 text-white">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <a class="btn btn-light btn-sm rounded-pill me-2" href="?Page=1">First</a>
+            <a class="btn btn-light btn-sm rounded-pill me-2" href="?Page=@(ViewBag.CurrentPage - 1)">Previous</a>
+        }
+
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <a class="btn btn-light btn-sm rounded-pill me-2" href="?Page=@(ViewBag.CurrentPage + 1)">Next</a>
+            <a class="btn btn-light btn-sm rounded-pill" href="?Page=@ViewBag.TotalPages">Last</a>
+        }
+
+        <p class="mt-2">Page @ViewBag.CurrentPage of @ViewBag.TotalPages</p>
+    </div>
+</div>
 
 <style>
     .story-container {
         display: flex;
         overflow-x: auto;
         gap: 20px;
-        padding: 10px 0;
+        padding: 20px;
         scroll-snap-type: x mandatory;
+        width: 90%;
     }
 
     .story-card {
         flex: 0 0 300px;
-        background-color: #f5f5f5;
-        border-radius: 8px;
+        background-color: #e3f2fd;
+        border-radius: 12px;
         padding: 15px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         scroll-snap-align: start;
         display: flex;
         flex-direction: column;
@@ -170,52 +163,23 @@
     .poster-img {
         width: 100%;
         height: auto;
-        border-radius: 6px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .story-content h4 {
         margin-bottom: 10px;
+        color: #1a1a1a;
     }
-
-    .story-content {
-        text-align: left;
-        width: 100%;
-    }
-
-        .story-content h3 {
-            margin-top: 0;
-        }
 
     .story-actions {
-        margin-top: 10px;
         text-align: center;
-    }
-
-    .btn {
-        text-decoration: none;
-        padding: 5px 10px;
-        border-radius: 4px;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-        color: white;
     }
 
     .reaction-buttons {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         gap: 10px;
-        align-items: center;
     }
-
-    .reaction-form {
-        margin: 0;
-    }
-
-        .reaction-form button {
-            width: 80px;
-        }
 </style>

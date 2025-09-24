@@ -3,31 +3,58 @@
     ViewBag.Title = "Login";
 }
 
-<h2 class="text-center mb-4">Login</h2>
+<div class="d-flex align-items-center justify-content-center vh-100"
+     style="background: linear-gradient(135deg,#7209b7,#4361ee,#4cc9f0);">
 
-<div class="container" style="max-width: 400px;">
-    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "card p-4 shadow-sm" }))
-    {
-        <!-- Prikaz validacionih poruka -->
-        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
-
-        <div class="mb-3">
-            @Html.LabelFor(m => m.Email, new { @class = "form-label" })
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter your email" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    <!-- Moderni Card -->
+    <div class="card border-0 shadow-lg rounded-4 p-5"
+         style="width: 420px; background: #e3f2fd;">
+        <!-- svetlo plava kao kod Register -->
+        <!-- Header -->
+        <div class="text-center mb-4 text-dark">
+            <div class="mb-3">
+                <i class="bi bi-film" style="font-size: 3rem;"></i>
+            </div>
+            <h2 class="fw-bold">MovieForum</h2>
+            <p class="opacity-75">Welcome back 👋</p>
         </div>
 
-        <div class="mb-3">
-            @Html.LabelFor(m => m.Password, new { @class = "form-label" })
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter your password" })
-            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-        </div>
+        <!-- Forma -->
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post,
+               new { @class = "needs-validation", novalidate = "novalidate" }))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
-        <button type="submit" class="btn btn-primary w-100">Login</button>
+            <!-- Email -->
+            <div class="mb-4">
+                @Html.LabelFor(m => m.Email, new { @class = "form-label fw-semibold" })
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email address" })
+                </div>
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small" })
+            </div>
 
-        <div class="mt-3 text-center">
-            <span>Don't have an account?</span>
-            <a href="@Url.Action("Register", "Account")">Register here</a>
+            <!-- Password -->
+            <div class="mb-4">
+                @Html.LabelFor(m => m.Password, new { @class = "form-label fw-semibold" })
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                </div>
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger small" })
+            </div>
+
+            <!-- Dugme -->
+            <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill fw-bold shadow-sm">
+                <i class="bi bi-box-arrow-in-right me-2"></i> Sign In
+            </button>
+        }
+
+        <!-- Footer link -->
+        <div class="text-center mt-4">
+            <span class="text-muted">Don’t have an account?</span>
+            <a href="@Url.Action("Register", "Account")" class="fw-bold text-primary text-decoration-underline"> Register</a>
         </div>
-    }
+    </div>
 </div>

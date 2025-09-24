@@ -3,81 +3,141 @@
     ViewBag.Title = "Edit Profile";
 }
 
-<h2>Edit Profile</h2>
+<div class="d-flex align-items-center justify-content-center min-vh-100 py-5"
+     style="background: linear-gradient(135deg,#7209b7,#4361ee,#4cc9f0);">
 
-@using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form" }))
-{
-    <div class="form-group">
-        @Html.LabelFor(m => m.FullName)
-        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
-    </div>
+    <!-- Card -->
+    <div class="card border-0 shadow-lg rounded-4 p-5"
+         style="width: 700px; background: #e3f2fd;">
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Gender)
-        @Html.DropDownListFor(m => m.Gender,
-            new SelectList(new[] { "Male", "Female", "Other" }, Model?.Gender),
-            "Select gender",
-            new { @class = "form-control" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Country)
-        @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.City)
-        @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Address)
-        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
-    </div>
-
-    <div class="form-group">
-        @Html.Label("New Password (optional)")
-        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-    </div>
-
-    <!-- Slika -->
-    <div class="form-group">
-        @Html.Label("Profile Photo")
-        <input type="file" id="PhotoFile" name="PhotoFile" class="form-control" accept="image/*" />
-
-        <div style="margin-top:10px;">
-            <p>Current / Preview:</p>
-            @if (!string.IsNullOrEmpty(Model?.PhotoUrl))
-            {
-                <img id="photoPreview"
-                     src="@Model.PhotoUrl"
-                     style="max-height:200px; display:block;" />
-            }
-            else
-            {
-                <span id="noPhotoText" class="text-muted">No photo available</span>
-                <img id="photoPreview" style="max-height:200px; display:none;" />
-            }
+        <!-- Header -->
+        <div class="text-center mb-4 text-dark">
+            <div class="mb-3">
+                <i class="bi bi-person-circle" style="font-size: 3rem;"></i>
+            </div>
+            <h2 class="fw-bold">Edit Profile</h2>
+            <p class="opacity-75">Update your information and profile photo</p>
         </div>
-    </div>
 
-    <br />
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-}
+        <!-- Form -->
+        @using (Html.BeginForm("EditProfile", "Account", FormMethod.Post,
+               new { enctype = "multipart/form-data", @class = "needs-validation", novalidate = "novalidate" }))
+        {
+            <div class="row g-4 text-dark">
+
+                <!-- Full Name -->
+                <div class="col-md-12">
+                    <label class="form-label fw-semibold">Full name</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "John Doe" })
+                    </div>
+                </div>
+
+                <!-- Gender -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Gender</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-gender-ambiguous"></i></span>
+                        @Html.DropDownListFor(m => m.Gender,
+                            new SelectList(new[] { "Male", "Female", "Other" }, Model?.Gender),
+                            "Select gender",
+                            new { @class = "form-select" })
+                    </div>
+                </div>
+
+                <!-- Country -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Country</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-globe"></i></span>
+                        @Html.TextBoxFor(m => m.Country, new { @class = "form-control", placeholder = "Country" })
+                    </div>
+                </div>
+
+                <!-- City -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">City</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                        @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "City" })
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Address</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-house-door"></i></span>
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Address" })
+                    </div>
+                </div>
+
+                <!-- New Password -->
+                <div class="col-md-12">
+                    <label class="form-label fw-semibold">New Password (optional)</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter new password" })
+                    </div>
+                </div>
+
+                <!-- Profile Photo -->
+                <div class="col-md-12">
+                    <label class="form-label fw-semibold">Profile Photo</label>
+                    <input type="file" id="PhotoFile" name="PhotoFile" class="form-control form-control-lg" accept="image/*" />
+                    <small class="text-muted">JPEG, PNG, GIF, WEBP</small>
+
+                    <!-- Preview -->
+                    <div class="border rounded p-3 text-center bg-light mt-3">
+                        <img id="photoPreview"
+                             src="@(string.IsNullOrWhiteSpace(Model?.PhotoUrl) ? "" : Model.PhotoUrl)"
+                             alt="Profile photo preview"
+                             class="img-thumbnail shadow-sm"
+                             style="max-width:150px; height:auto; @(string.IsNullOrWhiteSpace(Model?.PhotoUrl) ? "display:none;" : "display:inline-block;")" />
+                        <div id="photoPlaceholder" class="text-muted"
+                             style="@(string.IsNullOrWhiteSpace(Model?.PhotoUrl) ? "" : "display:none;")">
+                            No photo selected
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <button type="submit" class="btn btn-primary w-100 py-2 mt-4 rounded-pill fw-bold shadow-sm">
+                <i class="bi bi-save me-2"></i> Save Changes
+            </button>
+        }
+    </div>
+</div>
 
 @section scripts {
     <script>
-        document.getElementById('PhotoFile').addEventListener('change', function (e) {
-            const file = e.target.files[0];
-            if (!file) return;
+        (function () {
+            var fileInput = document.getElementById('PhotoFile');
+            var preview = document.getElementById('photoPreview');
+            var placeholder = document.getElementById('photoPlaceholder');
 
-            const url = URL.createObjectURL(file);
-            const preview = document.getElementById('photoPreview');
-            const noPhotoText = document.getElementById('noPhotoText');
+            function showPreview(src) {
+                if (src) {
+                    preview.src = src;
+                    preview.style.display = 'inline-block';
+                    placeholder.style.display = 'none';
+                } else {
+                    preview.removeAttribute('src');
+                    preview.style.display = 'none';
+                    placeholder.style.display = '';
+                }
+            }
 
-            preview.src = url;
-            preview.style.display = 'block';
-            if (noPhotoText) noPhotoText.style.display = 'none';
-        });
+            if (fileInput) {
+                fileInput.addEventListener('change', function (e) {
+                    var file = e.target.files && e.target.files[0];
+                    if (!file) { showPreview(''); return; }
+                    var objectUrl = URL.createObjectURL(file);
+                    showPreview(objectUrl);
+                });
+            }
+        })();
     </script>
 }

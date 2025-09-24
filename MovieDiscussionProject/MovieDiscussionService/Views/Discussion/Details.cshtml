@@ -1,48 +1,79 @@
 ﻿@model Common.DTOs.AddCommentDTO
 @{
-    var discussion = ViewBag.Discussion as Common.DiscussionEntity;
-    var comments = ViewBag.Comments as List<Common.CommentEntity>;
+    ViewBag.Title = "Discussion Details";
+    var discussion = ViewBag.Discussion as Common.Models.DiscussionEntity;
+    var comments = ViewBag.Comments as List<Common.Models.CommentEntity>;
 }
 
-<p><img src="@discussion.PosterUrl" style="max-width:300px;" /></p>
-<h3>@discussion.MovieTitle (@discussion.Year)</h3>
-<p><strong>Genre:</strong> @discussion.Genre</p>
-<p><strong>IMDB:</strong> @discussion.ImdbRating</p>
-<p><strong>Duration:</strong> @discussion.DurationMin min</p>
-<p><strong>Synopsis:</strong> @discussion.Synopsis</p>
-<p><strong>Reactions:</strong> 👍 @discussion.Positive / 👎 @discussion.Negative</p>
-<p><strong>Created:</strong> @discussion.CreatedUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</p>
-<p><strong>By:</strong> @discussion.CreatorEmail</p>
+<div class="d-flex align-items-center justify-content-center min-vh-100 py-5"
+     style="background: linear-gradient(135deg,#7209b7,#4361ee,#4cc9f0);">
 
-<hr />
+    <div class="card border-0 shadow-lg rounded-4 p-5 w-100" style="max-width: 900px; background: #f8f9fa;">
 
-<h3>Leave a Comment</h3>
-@using (Html.BeginForm("AddComment", "Discussion", FormMethod.Post))
-{
-    @Html.HiddenFor(m => m.DiscussionId)
-    @Html.TextAreaFor(m => m.Text, new { @class = "form-control", rows = 3 })
-    @Html.ValidationMessageFor(m => m.Text)
-    <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
-}
-
-<a href="@Url.Action("Index", "Discussion")" class="btn btn-secondary mt-2">Back to Discussions</a>
-
-<hr />
-
-<h3>Comments</h3>
-@if (comments.Any())
-{
-    <div class="comment-list mt-2">
-        @foreach (var comment in comments)
-        {
-            <div class="comment-item">
-                <strong>@comment.AuthorEmail:</strong> @comment.Text
-                <div style="font-size: small; color: gray;">@comment.CreatedUtc.ToLocalTime().ToString("g")</div>
+        <!-- Movie Info -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-4 text-center">
+                <img src="@discussion.PosterUrl" alt="Poster" class="img-fluid rounded shadow-sm" style="max-height: 300px;" />
             </div>
-        }
+            <div class="col-md-8 text-dark">
+                <h2 class="fw-bold">@discussion.MovieTitle (@discussion.Year)</h2>
+                <p><strong>Genre:</strong> @discussion.Genre</p>
+                <p><strong>IMDB:</strong> @discussion.ImdbRating</p>
+                <p><strong>Duration:</strong> @discussion.DurationMin min</p>
+                <p><strong>Synopsis:</strong> @discussion.Synopsis</p>
+                <p><strong>Reactions:</strong> 👍 @discussion.Positive / 👎 @discussion.Negative</p>
+                <p><strong>Created:</strong> @discussion.CreatedUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</p>
+                <p><strong>By:</strong> @discussion.CreatorEmail</p>
+            </div>
+        </div>
+
+        <hr />
+
+        <!-- Add Comment -->
+        <div class="mb-4">
+            <h3 class="fw-bold text-dark mb-3">💬 Leave a Comment</h3>
+            @using (Html.BeginForm("AddComment", "Discussion", FormMethod.Post, new { @class = "needs-validation" }))
+            {
+                @Html.HiddenFor(m => m.DiscussionId)
+                <div class="mb-3">
+                    @Html.TextAreaFor(m => m.Text, new { @class = "form-control shadow-sm", rows = 3, placeholder = "Write your comment..." })
+                    @Html.ValidationMessageFor(m => m.Text, "", new { @class = "text-danger small" })
+                </div>
+                <button type="submit" class="btn btn-primary rounded-pill fw-semibold shadow-sm">
+                    <i class="bi bi-send me-1"></i> Post Comment
+                </button>
+                <a href="@Url.Action("Index", "Discussion")" class="btn btn-secondary rounded-pill fw-semibold shadow-sm ms-2">
+                    Back to Discussions
+                </a>
+            }
+        </div>
+
+        <hr />
+
+        <!-- Comments Section -->
+        <div>
+            <h3 class="fw-bold text-dark mb-3">📝 Comments</h3>
+            @if (comments.Any())
+            {
+                <div class="list-group">
+                    @foreach (var comment in comments)
+                    {
+                        <div class="list-group-item border-0 shadow-sm mb-2 rounded-3">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <strong>@comment.AuthorEmail</strong>
+                                    <p class="mb-1">@comment.Text</p>
+                                </div>
+                                <small class="text-muted">@comment.CreatedUtc.ToLocalTime().ToString("g")</small>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">No comments yet. Be the first to comment!</p>
+            }
+        </div>
     </div>
-}
-else
-{
-    <p>No comments yet.</p>
-}
+</div>

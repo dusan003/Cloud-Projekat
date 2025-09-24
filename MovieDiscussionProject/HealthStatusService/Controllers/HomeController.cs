@@ -7,6 +7,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using Common;
 using HealthStatusService.Models;
+using Common.Models;
 
 namespace HealthStatusService.Controllers
 {

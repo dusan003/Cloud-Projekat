@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Common;
+using Common.Models;
 
 namespace HealthStatusService.Models
 {

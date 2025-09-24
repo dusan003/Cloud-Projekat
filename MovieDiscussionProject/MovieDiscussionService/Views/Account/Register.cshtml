@@ -3,103 +3,151 @@
     ViewBag.Title = "Register";
 }
 
-<h2 class="text-center mb-4">Create account</h2>
+<div class="d-flex align-items-center justify-content-center min-vh-100 py-5"
+     style="background: linear-gradient(135deg,#7209b7,#4361ee,#4cc9f0);">
 
-<div class="container" style="max-width: 640px;">
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "card p-4 shadow-sm", enctype = "multipart/form-data" }))
-    {
-        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
-
-        <div class="row">
-            <div class="col-md-12 mb-3">
-                @Html.LabelFor(m => m.FullName, new { @class = "form-label" })
-                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "Full name" })
-                @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger" })
+    <!-- Card sa čistom svetlo plavom bojom -->
+    <div class="card border-0 shadow-lg rounded-4 p-5"
+         style="width: 800px; background: #e3f2fd;">
+        <!-- Header -->
+        <div class="text-center mb-4 text-dark">
+            <div class="mb-3">
+                <i class="bi bi-person-plus" style="font-size: 3rem;"></i>
             </div>
+            <h2 class="fw-bold">Create Account</h2>
+            <p class="opacity-75">Join MovieForum and start discussions 🎬</p>
+        </div>
 
-            <div class="col-md-6 mb-3">
-                @Html.LabelFor(m => m.Gender, new { @class = "form-label" })
-                @Html.DropDownListFor(m => m.Gender,
-                    new SelectList(new[] { "Male", "Female", "Other" }),
-                    "Select gender",
-                    new { @class = "form-select" })
-                @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
-            </div>
+        <!-- Body -->
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post,
+               new { @class = "needs-validation", enctype = "multipart/form-data", novalidate = "novalidate" }))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
-            <div class="col-md-6 mb-3">
-                @Html.LabelFor(m => m.Email, new { @class = "form-label" })
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "email@example.com", type = "email" })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-            </div>
+            <div class="row g-4 text-dark">
+                <!-- Full name -->
+                <div class="col-md-12">
+                    <label class="form-label fw-semibold">Full name</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", placeholder = "John Doe" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.FullName, "", new { @class = "text-danger small" })
+                </div>
 
-            <div class="col-md-6 mb-3">
-                @Html.LabelFor(m => m.Password, new { @class = "form-label" })
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password (min 6 chars)" })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-            </div>
+                <!-- Gender -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Gender</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-gender-ambiguous"></i></span>
+                        @Html.DropDownListFor(m => m.Gender,
+                            new SelectList(new[] { "Male", "Female", "Other" }),
+                            "Select gender",
+                            new { @class = "form-select" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger small" })
+                </div>
 
-            <div class="col-md-6 mb-3">
-                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "form-label" })
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Repeat password" })
-                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
-            </div>
+                <!-- Email -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Email</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "email@example.com", type = "email" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small" })
+                </div>
 
-            <div class="col-md-4 mb-3">
-                @Html.LabelFor(m => m.Country, new { @class = "form-label" })
-                @Html.TextBoxFor(m => m.Country, new { @class = "form-control", placeholder = "Country" })
-                @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
-            </div>
+                <!-- Password -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Password</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Min 6 characters" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger small" })
+                </div>
 
-            <div class="col-md-4 mb-3">
-                @Html.LabelFor(m => m.City, new { @class = "form-label" })
-                @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "City" })
-                @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger" })
-            </div>
+                <!-- Confirm Password -->
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">Repeat Password</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Repeat password" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger small" })
+                </div>
 
-            <div class="col-md-4 mb-3">
-                @Html.LabelFor(m => m.Address, new { @class = "form-label" })
-                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Address" })
-                @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
-            </div>
+                <!-- Country -->
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Country</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-globe"></i></span>
+                        @Html.TextBoxFor(m => m.Country, new { @class = "form-control", placeholder = "Country" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger small" })
+                </div>
 
-          
+                <!-- City -->
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">City</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                        @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "City" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.City, "", new { @class = "text-danger small" })
+                </div>
 
-            <!-- (Novo) Upload fajla - za preview sada, upload kasnije kad dodaš parametar u akciji -->
-            <div class="col-md-12 mb-3">
-                <label for="PhotoFile" class="form-label">Upload profile photo (optional)</label>
-                <input type="file" id="PhotoFile" name="PhotoFile" class="form-control" accept="image/*" />
-                <small class="text-muted">JPEG, PNG, GIF, WEBP</small>
-            </div>
+                <!-- Address -->
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Address</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text"><i class="bi bi-house-door"></i></span>
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Address" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger small" })
+                </div>
 
-            <!-- (Novo) Preview sekcija -->
-            <div class="col-md-12 mb-3">
-                <label class="form-label">Preview</label>
-                <div class="border rounded p-3 text-center">
-                    <img id="photoPreview"
-                         src="@(string.IsNullOrWhiteSpace(Model?.PhotoUrl) ? "" : Model.PhotoUrl)"
-                         alt="Profile photo preview"
-                         style="max-width:220px; height:auto; @(string.IsNullOrWhiteSpace(Model?.PhotoUrl) ? "display:none;" : "display:inline-block;")" />
-                    <div id="photoPlaceholder" class="text-muted" style="@(string.IsNullOrWhiteSpace(Model?.PhotoUrl) ? "" : "display:none;")">
-                        No photo selected
+                <!-- Upload photo -->
+                <div class="col-md-12">
+                    <label class="form-label fw-semibold">Profile photo (optional)</label>
+                    <input type="file" id="PhotoFile" name="PhotoFile" class="form-control form-control-lg" accept="image/*" />
+                    <small class="text-muted">JPEG, PNG, GIF, WEBP</small>
+                </div>
+
+                <!-- Preview -->
+                <div class="col-md-12">
+                    <label class="form-label fw-semibold">Preview</label>
+                    <div class="border rounded p-3 text-center bg-light">
+                        <img id="photoPreview"
+                             src="@(string.IsNullOrWhiteSpace(Model?.PhotoUrl) ? "" : Model.PhotoUrl)"
+                             alt="Profile photo preview"
+                             class="img-thumbnail shadow-sm"
+                             style="max-width:120px; height:auto; @(string.IsNullOrWhiteSpace(Model?.PhotoUrl) ? "display:none;" : "display:inline-block;")" />
+                        <div id="photoPlaceholder" class="text-muted" style="@(string.IsNullOrWhiteSpace(Model?.PhotoUrl) ? "" : "display:none;")">
+                            No photo selected
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <button type="submit" class="btn btn-success w-100">Create account</button>
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary w-100 py-2 mt-4 rounded-pill fw-bold shadow-sm">
+                <i class="bi bi-check-circle me-2"></i> Create Account
+            </button>
 
-        <div class="mt-3 text-center">
-            <span>Already have an account?</span>
-            <a href="@Url.Action("Login", "Account")">Login here</a>
-        </div>
-    }
+            <div class="mt-3 text-center">
+                <span class="text-muted">Already have an account?</span>
+                <a href="@Url.Action("Login", "Account")" class="fw-bold text-primary text-decoration-underline"> Login</a>
+            </div>
+        }
+    </div>
 </div>
 
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         (function () {
-            var urlInput = document.getElementById('PhotoUrl');
             var fileInput = document.getElementById('PhotoFile');
             var preview = document.getElementById('photoPreview');
             var placeholder = document.getElementById('photoPlaceholder');
@@ -116,23 +164,13 @@
                 }
             }
 
-            // Preview kad se unosi URL
-            if (urlInput) {
-                urlInput.addEventListener('input', function (e) {
-                    var v = e.target.value.trim();
-                    if (v.startsWith('http://') || v.startsWith('https://')) {
-                        showPreview(v);
-                    } else if (v.length === 0) {
-                        showPreview('');
-                    }
-                });
-            }
-
-            // Preview kad se izabere fajl
             if (fileInput) {
                 fileInput.addEventListener('change', function (e) {
                     var file = e.target.files && e.target.files[0];
-                    if (!file) { showPreview(''); return; }
+                    if (!file) {
+                        showPreview('');
+                        return;
+                    }
                     var objectUrl = URL.createObjectURL(file);
                     showPreview(objectUrl);
                 });

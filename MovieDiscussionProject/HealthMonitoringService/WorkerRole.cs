@@ -55,8 +55,8 @@ namespace HealthMonitoringService
             var tableClient = storageAccount.CreateCloudTableClient();
             healthCheckTable = tableClient.GetTableReference("HealthCheck");
             alertEmailsTable = tableClient.GetTableReference("AlertEmails");
-            // healthCheckTable.CreateIfNotExistsAsync().Wait();
-            // alertEmailsTable.CreateIfNotExistsAsync().Wait();
+            healthCheckTable.CreateIfNotExistsAsync().Wait();
+            alertEmailsTable.CreateIfNotExistsAsync().Wait();
         }
 
         public override void Run()
